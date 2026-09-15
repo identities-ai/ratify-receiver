@@ -66,6 +66,11 @@ After publication, the install command will be:
 npm install @identities-ai/ratify-receiver
 ```
 
+Releases are made by pushing a semantic version tag such as `v0.1.0`. CI runs
+the full test suite and build again, then publishes the package with npm
+provenance. The repository must have an `NPM_TOKEN` secret before the first
+release.
+
 ```ts
 import { RatifyReceiver } from "@identities-ai/ratify-receiver";
 
