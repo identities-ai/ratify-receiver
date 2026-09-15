@@ -1,0 +1,22 @@
+# Receiver-facing fragment of the Ratify Verify API contract.
+# Keep this synchronized with /ratify/verify in the Verify OpenAPI document.
+                operation:
+                  required: [verifier_id, workspace_id, agent_id, action, resource_id, requested_path, session_id, invocation_id, request_hash]
+                  properties:
+                    verifier_id: { type: string }
+                    workspace_id: { type: string, format: uuid }
+                    agent_id: { type: string }
+                    action: { type: string }
+                    resource_id: { type: string }
+                    requested_path: { type: string }
+                    payload_digest: { type: string, format: byte }
+                    session_id: { type: string }
+                    invocation_id: { type: string }
+                    request_hash: { type: string, format: byte }
+                    action_profile:
+                      type: string
+                      minLength: 1
+                      maxLength: 128
+                      pattern: '^[!-~]+$'
+      responses:
+        "409": { description: invocation_conflict }
