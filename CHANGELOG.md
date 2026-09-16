@@ -3,10 +3,18 @@
 This project follows [semantic versioning](https://semver.org/). While the
 version is below 1.0, minor releases may contain breaking changes.
 
-## 0.1.0 (unreleased)
+## 0.1.3 (2026-09-16)
+
+Corrected the published package metadata and switched npm publishing to GitHub
+OIDC Trusted Publishing.
+
+## 0.1.0 (deprecated)
 
 First release: a TypeScript helper that guards a protected handler with Ratify
 Verify, extracted from the Ratify service repository and published standalone.
+
+This version is deprecated because it declared the protocol as a direct
+dependency. Use 0.1.3 or later.
 
 ### The design worth knowing about
 
