@@ -51,25 +51,15 @@ sequenceDiagram
 Requirements: Node.js 22 or newer, a Ratify Verify receiver integration with an
 API key, and an agent proof produced for the same action and invocation ID.
 
-The package is release-ready but is not published to npm yet. Until the first
-release, clone the repository and install the package workspace locally:
-
-```bash
-git clone https://github.com/identities-ai/ratify-receiver.git
-cd ratify-receiver
-npm ci
-```
-
-After publication, the install command will be:
+Install the published package from npm:
 
 ```bash
 npm install @identities-ai/ratify-receiver
 ```
 
-Releases are made by pushing a semantic version tag such as `v0.1.0`. CI runs
-the full test suite and build again, then publishes the package with npm
-provenance. The repository must have an `NPM_TOKEN` secret before the first
-release.
+Releases are made by pushing a semantic version tag. CI runs the full test
+suite and build again, then publishes through npm Trusted Publishing with
+GitHub provenance.
 
 ```ts
 import { RatifyReceiver } from "@identities-ai/ratify-receiver";

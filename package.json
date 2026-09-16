@@ -1,6 +1,6 @@
 {
   "name": "@identities-ai/ratify-receiver",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Fail-closed TypeScript receiver helper for Ratify Verify protected actions.",
   "license": "Apache-2.0",
   "private": false,
