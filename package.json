@@ -1,12 +1,12 @@
 {
   "name": "@identities-ai/ratify-receiver",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Fail-closed TypeScript receiver helper for Ratify Verify protected actions.",
   "license": "Apache-2.0",
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/identities-ai/ratify-receiver.git"
+    "url": "git+https://github.com/identities-ai/ratify-receiver.git"
   },
   "homepage": "https://github.com/identities-ai/ratify-receiver",
   "bugs": "https://github.com/identities-ai/ratify-receiver/issues",
@@ -17,8 +17,12 @@
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
-  "engines": { "node": ">=22" },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "build": "tsc",
     "test": "node --import tsx --test test/*.test.ts",
