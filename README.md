@@ -123,6 +123,60 @@ frozen `context.action` and `context.payload`, and downstream systems should use
 `invocationId` as an idempotency key. Read [Retries](#retries) before enabling
 `onReplay: "run"`.
 
+## API reference
+
+Everything exported from `@identities-ai/ratify-receiver`. Anything not listed
+here is internal and may change without a major version.
+
+### `RatifyReceiver`
+
+| Member | Signature | Notes |
+|---|---|---|
+| `constructor` | `(config: ReceiverConfig)` | `apiKey`, `verifierId` and `workspaceId` are captured here and never re-read, so a later change to the config object cannot alter what a request carries. |
+| `challenge` | `(action) => Promise<{ challenge, sessionContext }>` | The challenge and the context the agent signs it over. |
+| `guard` | `(action, proofBundle, handler, options?) => Promise<GuardResult>` | Decides, then runs `handler` only on an allow that has not already been given. |
+| `decide` | `(action, proofBundle) => Promise<DecisionResult>` | The same decision, running nothing. You own the branch, including replay handling. |
+| `reportOutcome` | `(invocationId, receiptId, outcome, detail?) => Promise<Error \| undefined>` | Never throws; returns a reporting failure rather than discarding it. |
+
+### Types
+
+| Type | What it is |
+|---|---|
+| `ReceiverConfig` | `apiKey`, `verifierId`, `workspaceId`, optional `baseUrl` and `fetch`. |
+| `ProtectedAction` | One consequential action: `action`, `requiredScope`, `resourceId`, optional `requestedPath`, optional `payload`, `agentId`, `sessionId`, `invocationId`, optional `actionProfile`. |
+| `GuardOptions` | `onReplay?: "skip" \| "run"`, default `"skip"`. |
+| `GuardResult<T>` | `status`, `decision`, `handlerInvoked`, `value?`, `outcomeReportError?`. No `allowed`. See [Why the handler is passed in](#why-the-handler-is-passed-in). |
+| `GuardStatus` | `"executed" \| "refused" \| "replayed"`. |
+| `HandlerContext` | What the handler receives: `invocationId`, `receiptId`, `action`, `decision`, `payload`. Frozen, including the object itself. |
+| `BoundAction` | The action as signed, normalized. `requestedPath` is `""` when omitted. |
+| `DecisionResult` | `allowed`, `decision`, `reason`, `identityStatus`, `receiptId`, `receiptHash`, `replayed`, `receipt`, `boundPayload`. Frozen. |
+| `Decision` | `"allow" \| "deny" \| "indeterminate" \| "defer"`. A value outside this set is a malformed response. |
+| `Outcome` | `"executed" \| "failed" \| "refused_by_receiver" \| "not_attempted"`. |
+| `JsonValue` | JSON and only JSON. Read-only, because the bound snapshot is frozen. |
+
+### Errors
+
+| Export | Thrown when |
+|---|---|
+| `VerifyError` | A call did not reach a decision. Carries `status` and `code`; `code` is `"malformed_response"` for a response that is not a usable decision. |
+| `ReceiverRefusal` | Throw this from your handler when your own policy declines something Ratify allowed. Recorded as `refused_by_receiver`. |
+| `PayloadNotCanonical` | A payload that is not JSON, or that carries something the digest cannot cover. |
+| `outcomeReportErrorOf(error)` | Not thrown. Reads the outcome-report failure recorded against a handler error that `guard` rethrew. |
+
+### Action profiles
+
+| Export | What it is |
+|---|---|
+| `GITHUB_DEPLOY_V1` | The profile name, `"github.deploy/v1"`. |
+| `githubDeployV1(request)` | Builds a `ProtectedAction` under that profile. |
+| `GithubDeployRequest` | Its input type. |
+
+### Canonicalization
+
+| Export | What it is |
+|---|---|
+| `canonicalJSON(value)` | The deterministic JSON a payload digest is taken over. Exported so you can reproduce a digest yourself; `guard` calls it for you. |
+
 ## License and product boundary
 
 This receiver helper is available under the [Apache-2.0 license](./LICENSE).

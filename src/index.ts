@@ -1,6 +1,6 @@
 export { RatifyReceiver } from "./receiver.js";
 export { GITHUB_DEPLOY_V1, githubDeployV1, type GithubDeployRequest } from "./profiles.js";
-export { bindPayload, canonicalJSON, materialize, payloadDigest } from "./canonical.js";
+export { canonicalJSON } from "./canonical.js";
 export {
   PayloadNotCanonical,
   ReceiverRefusal,

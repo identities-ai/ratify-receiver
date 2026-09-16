@@ -1,14 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { buildSessionContext } from "@identities-ai/ratify-protocol";
-import {
-  PayloadNotCanonical,
-  materialize,
-  RatifyReceiver,
-  canonicalJSON,
-  payloadDigest,
-  type ProtectedAction,
-} from "../src/index.js";
+import { canonicalJSON, materialize, payloadDigest } from "../src/canonical.js";
+import { PayloadNotCanonical, RatifyReceiver, type ProtectedAction } from "../src/index.js";
 
 const base: ProtectedAction = {
   action: "github.deploy",
