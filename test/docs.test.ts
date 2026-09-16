@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import * as api from "../src/index.js";
+import packageJson from "../package.json" with { type: "json" };
 
 /**
  * The README is the integration contract for a package whose whole job is to be
@@ -88,4 +89,10 @@ test("the README names the protocol and managed Verify boundary", () => {
   assert.match(readme, /https:\/\/github\.com\/identities-ai\/ratify-protocol/);
   assert.match(readme, /https:\/\/ratifyprotocol\.com/);
   assert.match(readme, /Apache-2\.0/i);
+});
+
+test("the protocol is a peer dependency, so consumers cannot get two copies", () => {
+  assert.equal(packageJson.peerDependencies?.["@identities-ai/ratify-protocol"], "1.0.0-alpha.20");
+  assert.equal(packageJson.dependencies?.["@identities-ai/ratify-protocol"], undefined);
+  assert.equal(packageJson.devDependencies?.["@identities-ai/ratify-protocol"], "1.0.0-alpha.20");
 });
