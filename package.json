@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@identities-ai/ratify-protocol": "1.0.0-alpha.20",
-    "@types/node": "^22.10.2",
+    "@types/node": "^26.5.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   },
