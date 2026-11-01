@@ -8,6 +8,12 @@ It asks Verify to decide whether an agent may perform one specific action, and
 it only calls your handler after an explicit allow. Refusals, deferred decisions,
 malformed responses, and replayed decisions do not reach the handler by default.
 
+**Current status:** This published helper targets the development Verify v1 API
+and depends on Protocol v1. Ratify Verify is not yet publicly available, so
+the quick start below requires authorized development access and an explicit
+development API URL. The helper has not been validated with Protocol v2 or the
+future Verify service, which will use Protocol v2 by default.
+
 This package is for the receiving side of an agent workflow. It is not an agent
 SDK, a key-management system, or a replacement for the open [Ratify Protocol](https://github.com/identities-ai/ratify-protocol).
 Use the protocol SDKs when you issue delegations, sign presentations, or verify
@@ -48,8 +54,11 @@ sequenceDiagram
 
 ## 60-second quick start
 
-Requirements: Node.js 22 or newer, a Ratify Verify receiver integration with an
-API key, and an agent proof produced for the same action and invocation ID.
+Requirements: Node.js 22 or newer, authorized access to the Verify development
+environment, a receiver integration with an API key, and a Protocol v1 agent
+proof produced for the same action and invocation ID. Set `baseUrl` to the
+development API URL supplied with that access; the package default points to
+an unavailable production endpoint.
 
 Install the published package from npm:
 
@@ -66,6 +75,7 @@ import { RatifyReceiver } from "@identities-ai/ratify-receiver";
 
 const receiver = new RatifyReceiver({
   apiKey: process.env.RATIFY_API_KEY!,
+  baseUrl: process.env.RATIFY_DEV_API_URL!,
   verifierId: "receiver:acme-deployments",
   workspaceId: process.env.RATIFY_WORKSPACE_ID!,
 });
@@ -181,6 +191,7 @@ import { RatifyReceiver, ReceiverRefusal } from "@identities-ai/ratify-receiver"
 
 const receiver = new RatifyReceiver({
   apiKey: process.env.RATIFY_API_KEY!,
+  baseUrl: process.env.RATIFY_DEV_API_URL!,
   verifierId: "receiver:acme-deployments",
   workspaceId: process.env.RATIFY_WORKSPACE_ID!,
 });
