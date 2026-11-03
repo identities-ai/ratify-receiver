@@ -31,12 +31,12 @@
     "prepublishOnly": "npm run check"
   },
   "devDependencies": {
-    "@identities-ai/ratify-protocol": "1.0.0-alpha.20",
+    "@identities-ai/ratify-protocol": "1.0.0-alpha.21",
     "@types/node": "^26.5.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   },
   "peerDependencies": {
-    "@identities-ai/ratify-protocol": "1.0.0-alpha.20"
+    "@identities-ai/ratify-protocol": "1.0.0-alpha.21"
   }
 }
